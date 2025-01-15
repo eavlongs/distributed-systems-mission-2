@@ -3,19 +3,15 @@ package controllers
 import (
 	"os"
 
-	"github.com/eavlongs/file_sync/constants"
 	"github.com/eavlongs/file_sync/utils"
 	"github.com/gin-gonic/gin"
 )
 
 type MainController struct {
-	cf *constants.Config
 }
 
-func NewMainController(cf *constants.Config) *MainController {
-	return &MainController{
-		cf: cf,
-	}
+func NewMainController() *MainController {
+	return &MainController{}
 }
 
 func (c *MainController) ServeFile(ctx *gin.Context) {

@@ -5,7 +5,6 @@ import (
 	"log"
 	"os"
 
-	"github.com/eavlongs/file_sync/constants"
 	"github.com/eavlongs/file_sync/controllers"
 	"github.com/eavlongs/file_sync/routes"
 	"github.com/gin-contrib/cors"
@@ -22,13 +21,12 @@ func init() {
 
 func main() {
 	var (
-		config         = constants.NewConfig()
-		MainController = controllers.NewMainController(config)
+		MainController = controllers.NewMainController()
 	)
 
 	router := gin.Default()
 	corsConfig := cors.DefaultConfig()
-	corsConfig.AllowOrigins = []string{"http://localhost:3000"}
+	corsConfig.AllowOrigins = []string{"*"}
 	corsConfig.AllowHeaders = []string{"Origin", "Content-Length", "Content-Type", "Authorization"}
 	corsConfig.AllowMethods = []string{"GET", "POST", "PATCH", "DELETE"}
 
@@ -40,7 +38,7 @@ func main() {
 	routes.RegisterMainRoutes(routerGroup, MainController)
 
 	port := os.Getenv("API_PORT")
-	if err := router.Run("127.0.0.1:" + port); err != nil {
+	if err := router.Run("0.0.0.0:" + port); err != nil {
 		// if err := route.Run(":" + port); err != nil {
 		log.Fatalf("error running server: %v", err)
 	}
